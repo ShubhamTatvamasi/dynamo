@@ -9,3 +9,10 @@ Add helm repo:
 ```bash
 helm repo add ai-dynamo https://helm.ngc.nvidia.com/nvidia/ai-dynamo
 ```
+
+Install dynamo-platform:
+```bash
+helm upgrade -i dynamo-platform ai-dynamo/dynamo-platform \
+  --namespace dynamo-system \
+  --create-namespace
+```
