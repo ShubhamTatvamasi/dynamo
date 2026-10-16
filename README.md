@@ -16,3 +16,33 @@ helm upgrade -i dynamo-platform ai-dynamo/dynamo-platform \
   --namespace dynamo-system \
   --create-namespace
 ```
+
+---
+
+Port-forward your service:
+```bash
+kubectl -n dynamo port-forward svc/qwen35-frontend 8000:8000
+```
+
+Check the list of models:
+```bash
+curl -s http://localhost:8000/v1/models | jq
+```
+
+Send your message:
+```bash
+curl -s http://localhost:8000/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "model": "RedHatAI/Qwen3.5-9B-FP8-dynamic",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Hi, How are you?"
+      }
+    ],
+    "max_tokens": 256,
+    "temperature": 0.2
+  }' | jq -r '.choices[0].message.content'
+```
+
